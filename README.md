@@ -1,4 +1,4 @@
-# AI-Powered To-Do List
+# TaskGenius - an AI-Powered To-Do List
 
 Welcome to the AI-Powered To-Do List application! This tool is designed to enhance your productivity with smart features such as task prediction, app integrations, and intelligent reminders.
 
