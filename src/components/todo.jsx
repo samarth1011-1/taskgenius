@@ -1,76 +1,131 @@
 import React, { useState } from "react";
-import { Trash2 } from "lucide-react";
+import { PlusCircle, CheckCircle, Circle, Trash2 } from "lucide-react";
+import stats from "./stats.png";
 
-const Todo = () => {
+const TodoApp = () => {
+  const [toggle, setToggle] = useState(false);
   const [tasks, setTasks] = useState([]);
-  const [userInput, setUserInput] = useState("");
+  const [newTask, setNewTask] = useState("");
+  const [doneTasks, setDoneTasks] = useState([]);
 
-  const handleInputChange = (e) => {
-    setUserInput(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (userInput.trim() !== "") {
-      setTasks([...tasks, { id: Date.now(), text: userInput, completed: false }]);
-      setUserInput("");
+  const addTask = () => {
+    if (newTask.trim() !== "") {
+      setTasks([...tasks, { id: Date.now(), text: newTask }]);
+      setNewTask("");
     }
   };
 
-  const toggleTask = (id) => {
-    setTasks(tasks.map(task => 
-      task.id === id ? { ...task, completed: !task.completed } : task
-    ));
+  const completeTask = (taskId) => {
+    const task = tasks.find((t) => t.id === taskId);
+    setTasks(tasks.filter((t) => t.id !== taskId));
+    setDoneTasks([...doneTasks, task]);
   };
 
-  const deleteTask = (id) => {
-    setTasks(tasks.filter(task => task.id !== id));
+  const deleteTask = (taskId, isDone) => {
+    if (isDone) {
+      setDoneTasks(doneTasks.filter((t) => t.id !== taskId));
+    } else {
+      setTasks(tasks.filter((t) => t.id !== taskId));
+    }
+  };
+
+  const changeToggle = () => {
+    setToggle((prev) => !prev);
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold mb-4 text-center">Todo List</h1>
-      <form onSubmit={handleSubmit} className="mb-4 flex">
-        <input
-          type="text"
-          value={userInput}
-          onChange={handleInputChange}
-          placeholder="Add your task"
-          className="flex-grow p-2 border-2 border-gray-300 rounded-l-lg focus:outline-none focus:border-blue-500"
-        />
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600 transition duration-300"
-        >
-          Add
-        </button>
-      </form>
-
-      <ul className="space-y-2">
-        {tasks.map((task) => (
-          <li
-            key={task.id}
-            className="flex items-center justify-between bg-white p-3 rounded-lg shadow-sm"
+    <div className="bg-blue-950 flex flex-col md:flex-row w-screen select-none min-h-screen">
+      <div
+        className={`${
+          toggle ? "text-white absolute right-0 p-5 md:p-10" : "hidden"
+        }`}
+      >
+        empty text and statistics
+      </div>
+      <div
+        className={`${
+          toggle
+            ? "bg-[#1e1e2e] font-sans p-5 md:p-10 rounded-3xl w-fit h-fit m-5 md:m-10 absolute left-0"
+            : "bg-[#1e1e2e] font-sans p-5 md:p-10 rounded-3xl w-full h-fit m-5 md:m-10"
+        }`}
+      >
+        <div className="flex justify-between items-center mb-4 md:mb-6">
+          <input
+            type="text"
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}
+            placeholder="Add a new task"
+            className="flex-grow bg-[#2e2e3e] p-2 md:p-3 rounded-l-lg text-white focus:outline-none"
+          />
+          <button
+            onClick={addTask}
+            className="bg-[#8839ef] p-2 md:p-3 rounded-r-lg hover:bg-[#9d50ff] transition-colors"
           >
-            <span
-              onClick={() => toggleTask(task.id)}
-              className={`flex-grow cursor-pointer ${
-                task.completed ? "line-through text-gray-500" : ""
-              }`}
+            <PlusCircle size={24} color="white" />
+          </button>
+          <img
+            src={stats}
+            alt="statistics-logo"
+            className={`${
+              toggle ? "hidden" : "h-10 w-10 ml-2 hover:scale-105"
+            }`}
+            onClick={changeToggle}
+          />
+        </div>
+
+        <p className="mb-2 md:mb-4 text-xs md:text-sm text-gray-300">
+          Tasks to do - {tasks.length}
+        </p>
+        <div className="max-h-80 overflow-y-auto">
+          {tasks.map((task) => (
+            <div
+              key={task.id}
+              className="bg-[#2e2e3e] p-2 md:p-3 rounded-lg mb-2 flex justify-between items-center text-white"
             >
-              {task.text}
-            </span>
-            <button
-              onClick={() => deleteTask(task.id)}
-              className="text-red-500 hover:text-red-700 transition duration-300"
+              <span>{task.text}</span>
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() => completeTask(task.id)}
+                  className="text-[#8839ef] hover:text-[#9d50ff]"
+                >
+                  <Circle size={20} />
+                </button>
+                <button
+                  onClick={() => deleteTask(task.id, false)}
+                  className="text-red-500 hover:text-red-400"
+                >
+                  <Trash2 size={20} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <p className="mt-4 md:mt-6 mb-2 md:mb-4 text-xs md:text-sm text-gray-300">
+          Completed - {doneTasks.length}
+        </p>
+        <div className="max-h-80 overflow-y-auto">
+          {doneTasks.map((task) => (
+            <div
+              key={task.id}
+              className="bg-[#2e2e3e] p-2 md:p-3 rounded-lg mb-2 flex justify-between items-center text-white line-through"
             >
-              <Trash2 size={18} />
-            </button>
-          </li>
-        ))}
-      </ul>
+              <span>{task.text}</span>
+              <div className="flex items-center space-x-2">
+                <CheckCircle size={20} className="text-[#8839ef]" />
+                <button
+                  onClick={() => deleteTask(task.id, true)}
+                  className="text-red-500 hover:text-red-400"
+                >
+                  <Trash2 size={20} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
 
-export default Todo;
+export default TodoApp;

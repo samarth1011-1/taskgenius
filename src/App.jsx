@@ -1,12 +1,22 @@
-import Todo from "./components/todo"
+import Todo from "./components/todo";
+import Home from "./home/Home";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-function App() {
+const App= ()=> {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Home />
+    },
+    {
+      path:"/todo",
+      element:<Todo/>
+    }
+  ]);
 
   return (
-    <>
-      <Todo/>
-    </>
-  )
+      <RouterProvider router={router} />
+  );
 }
 
-export default App
+export default App;
