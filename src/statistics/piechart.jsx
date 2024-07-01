@@ -20,7 +20,6 @@ const piechart = () => {
     <div
       className="text-white p-5 md:p-10 h-fit w-fit"
     >
-      {/* PIE CHART */}
       <div className="min-h-60 min-w-60 p-5 rounded-2xl bg-white">
         <Pie data={pie} className="font-sans" />
       </div>
