@@ -2,3 +2,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* scrollbar.css */
+/* For WebKit browsers */
+::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #2e2e3e; /* Dark background */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #1e1e2e; /* Blackish color */
+    border-radius: 10px;
+    border: 3px solid #2e2e3e; /* Dark border to blend with the track */
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #38394c; /* Slightly lighter for hover effect */
+  }
+  
+  /* For Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #1e1e2e #2e2e3e;
+  }
+  
+  /* For Edge, Internet Explorer, and others */
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: #1e1e2e #2e2e3e;
+  }
+  

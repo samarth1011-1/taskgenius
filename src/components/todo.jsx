@@ -1,92 +1,84 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { PlusCircle, CheckCircle, Circle, Trash2 } from "lucide-react";
-import stats from "./stats.png";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { GlobalContext } from "../GlobalContexts/GobalContext";
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const TodoApp = () => {
-  const [toggle, setToggle] = useState(false);
-  const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState("");
-  const [doneTasks, setDoneTasks] = useState([]);
+  const { info, setInfo } = useContext(GlobalContext);
 
   const addTask = () => {
-    if (newTask.trim() !== "") {
-      setTasks([...tasks, { id: Date.now(), text: newTask }]);
-      setNewTask("");
+    if (info.newTask.trim() !== "") {
+      setInfo((prevInfo) => ({
+        ...prevInfo,
+        tasks: [...prevInfo.tasks, { id: Date.now(), text: prevInfo.newTask }],
+        newTask: ""
+      }));
     }
   };
 
   const completeTask = (taskId) => {
-    const task = tasks.find((t) => t.id === taskId);
-    setTasks(tasks.filter((t) => t.id !== taskId));
-    setDoneTasks([...doneTasks, task]);
+    const task = info.tasks.find((t) => t.id === taskId);
+    setInfo((prevInfo) => ({
+      ...prevInfo,
+      tasks: prevInfo.tasks.filter((t) => t.id !== taskId),
+      doneTasks: [...prevInfo.doneTasks, task],
+    }));
   };
 
   const deleteTask = (taskId, isDone) => {
     if (isDone) {
-      setDoneTasks(doneTasks.filter((t) => t.id !== taskId));
+      setInfo((prevInfo) => ({
+        ...prevInfo,
+        doneTasks: prevInfo.doneTasks.filter((t) => t.id !== taskId),
+      }));
     } else {
-      setTasks(tasks.filter((t) => t.id !== taskId));
+      setInfo((prevInfo) => ({
+        ...prevInfo,
+        tasks: prevInfo.tasks.filter((t) => t.id !== taskId),
+      }));
     }
   };
 
-  const changeToggle = () => {
-    setToggle((prev) => !prev);
-  };
-
   return (
-    <div className="bg-blue-950 flex flex-col md:flex-row w-screen select-none min-h-screen">
-      <div
-        className={`${
-          toggle ? "text-white absolute right-0 p-5 md:p-10" : "hidden"
-        }`}
-      >
-        empty text and statistics
-      </div>
-      <div
-        className={`${
-          toggle
-            ? "bg-[#1e1e2e] font-sans p-5 md:p-10 rounded-3xl w-fit h-fit m-5 md:m-10 absolute left-0"
-            : "bg-[#1e1e2e] font-sans p-5 md:p-10 rounded-3xl w-full h-fit m-5 md:m-10"
-        }`}
-      >
-        <div className="flex justify-between items-center mb-4 md:mb-6">
+    <div className="bg-[#1e1e2e] flex flex-col w-full min-h-full p-5 rounded-lg shadow-lg">
+      {/* TASK MANIPULATION */}
+      <div className="bg-[#27293D] p-5 rounded-lg">
+        <div className="flex justify-between items-center mb-4">
           <input
             type="text"
-            value={newTask}
-            onChange={(e) => setNewTask(e.target.value)}
+            value={info.newTask}
+            onChange={(e) =>
+              setInfo((prevInfo) => ({
+                ...prevInfo,
+                newTask: e.target.value
+              }))
+            }
             placeholder="Add a new task"
-            className="flex-grow bg-[#2e2e3e] p-2 md:p-3 rounded-l-lg text-white focus:outline-none"
+            className="flex-grow bg-[#2B2C3B] p-3 rounded-l-lg text-white focus:outline-none"
           />
           <button
             onClick={addTask}
-            className="bg-[#8839ef] p-2 md:p-3 rounded-r-lg hover:bg-[#9d50ff] transition-colors"
+            className="bg-[#5961F9] p-3 rounded-r-lg hover:bg-[#7D83F9] transition-colors"
           >
             <PlusCircle size={24} color="white" />
           </button>
-          <img
-            src={stats}
-            alt="statistics-logo"
-            className={`${
-              toggle ? "hidden" : "h-10 w-10 ml-2 hover:scale-105"
-            }`}
-            onClick={changeToggle}
-          />
         </div>
 
-        <p className="mb-2 md:mb-4 text-xs md:text-sm text-gray-300">
-          Tasks to do - {tasks.length}
+        <p className="mb-4 text-sm text-gray-400">
+          Tasks to do - {info.tasks.length}
         </p>
         <div className="max-h-80 overflow-y-auto">
-          {tasks.map((task) => (
+          {info.tasks.map((task) => (
             <div
               key={task.id}
-              className="bg-[#2e2e3e] p-2 md:p-3 rounded-lg mb-2 flex justify-between items-center text-white"
+              className="bg-[#2B2C3B] p-3 rounded-lg mb-2 flex justify-between items-center text-white"
             >
               <span>{task.text}</span>
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => completeTask(task.id)}
-                  className="text-[#8839ef] hover:text-[#9d50ff]"
+                  className="text-[#5961F9] hover:text-[#7D83F9]"
                 >
                   <Circle size={20} />
                 </button>
@@ -101,18 +93,18 @@ const TodoApp = () => {
           ))}
         </div>
 
-        <p className="mt-4 md:mt-6 mb-2 md:mb-4 text-xs md:text-sm text-gray-300">
-          Completed - {doneTasks.length}
+        <p className="mt-4 mb-4 text-sm text-gray-400">
+          Completed - {info.doneTasks.length}
         </p>
         <div className="max-h-80 overflow-y-auto">
-          {doneTasks.map((task) => (
+          {info.doneTasks.map((task) => (
             <div
               key={task.id}
-              className="bg-[#2e2e3e] p-2 md:p-3 rounded-lg mb-2 flex justify-between items-center text-white line-through"
+              className="bg-[#2B2C3B] p-3 rounded-lg mb-2 flex justify-between items-center text-white line-through"
             >
               <span>{task.text}</span>
               <div className="flex items-center space-x-2">
-                <CheckCircle size={20} className="text-[#8839ef]" />
+                <CheckCircle size={20} className="text-[#5961F9]" />
                 <button
                   onClick={() => deleteTask(task.id, true)}
                   className="text-red-500 hover:text-red-400"
