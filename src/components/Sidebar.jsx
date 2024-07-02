@@ -6,11 +6,10 @@ const Sidebar = () => {
   const { info, setInfo } = useContext(GlobalContext);
   const navigate = useNavigate();
 
-
-  function goto(g) {
-    setInfo((prevInfo)=>({
+  function goto(link) {
+    setInfo((prevInfo) => ({
       ...prevInfo,
-      location:g,
+      location: link,
     }));
   }
 
@@ -28,7 +27,7 @@ const Sidebar = () => {
         {Sidebardata.map((val, key) => (
           <li
             key={key}
-            onClick={()=> goto(val.link)}
+            onClick={() => goto(val.link)}
             className={`p-4 flex items-center space-x-4 hover:bg-[#27293D] cursor-pointer transition-colors ${
               !val.link ? "cursor-not-allowed opacity-50" : ""
             }`}
