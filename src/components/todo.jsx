@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { PlusCircle, CheckCircle, Circle, Trash2 } from "lucide-react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { GlobalContext } from "../GlobalContexts/GobalContext";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -12,15 +12,15 @@ const TodoApp = () => {
       setInfo((prevInfo) => ({
         ...prevInfo,
         tasks: [...prevInfo.tasks, { id: Date.now(), text: prevInfo.newTask }],
-        newTask: ""
+        newTask: "",
       }));
     }
   };
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       addTask();
     }
-  }
+  };
 
   const completeTask = (taskId) => {
     const task = info.tasks.find((t) => t.id === taskId);
@@ -53,12 +53,13 @@ const TodoApp = () => {
           <input
             type="text"
             value={info.newTask}
-            onChange={(e) =>
+            onChange={(e) => {
+              e.preventDefault()
               setInfo((prevInfo) => ({
                 ...prevInfo,
-                newTask: e.target.value
-              }))
-            }
+                newTask: e.target.value,
+              }));
+            }}
             onKeyPress={handleKeyPress}
             placeholder="Add a new task"
             className="flex-grow bg-[#2B2C3B] p-3 rounded-l-lg text-white focus:outline-none"
