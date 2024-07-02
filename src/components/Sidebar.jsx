@@ -6,10 +6,11 @@ const Sidebar = () => {
   const { info, setInfo } = useContext(GlobalContext);
   const navigate = useNavigate();
 
+
   function goto(g) {
     setInfo((prevInfo)=>({
       ...prevInfo,
-      ...prevInfo.location = g,
+      location:g,
     }));
   }
 
