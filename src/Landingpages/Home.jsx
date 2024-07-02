@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { PlusCircle } from "lucide-react";
-import { motion } from "framer-motion";
 
 const Home = () => {
   const navigate = useNavigate();
