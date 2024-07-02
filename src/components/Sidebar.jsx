@@ -9,7 +9,7 @@ const Sidebar = () => {
   function goto(g) {
     setInfo((prevInfo)=>({
       ...prevInfo,
-      location:g,
+      ...prevInfo.location = g,
     }));
   }
 
