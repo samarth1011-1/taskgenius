@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { GlobalProvider } from "./GlobalContexts/GobalContext";
 import Dashboard from "./Landingpages/Dashboard";
 import Statspage from "./statistics/statspage";
+import AI from "./AI/AI";
 const App= ()=> {
   const router = createBrowserRouter([
     {
@@ -21,6 +22,11 @@ const App= ()=> {
     {
       path:'/stats',
       element:<Statspage/>
+    },
+    {
+      path:'/AI',
+      element:<AI/>
+
     }
   ]);
 

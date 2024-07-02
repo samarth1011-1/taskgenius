@@ -8,6 +8,7 @@ const GlobalProvider = ({ children }) => {
     tasks: [],
     newTask: "",
     doneTasks: [],
+    location:"/dashboard"
   });
 
   return (

@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../GlobalContexts/GobalContext";
 import { Pie } from "react-chartjs-2";
-const piechart = () => {
-    const {info} = useContext(GlobalContext)
-  const pie = {
+
+const PieChart = () => {
+  const { info } = useContext(GlobalContext);
+  const pieData = {
     labels: ["Pending", "Completed"],
     datasets: [
       {
@@ -17,14 +18,11 @@ const piechart = () => {
   };
 
   return (
-    <div
-      className="text-white p-5 md:p-10 h-fit w-fit"
-    >
-      <div className="min-h-60 min-w-60 p-5 rounded-2xl bg-white">
-        <Pie data={pie} className="font-sans" />
-      </div>
+    <div className="bg-white p-5 md:p-10 rounded-2xl shadow-lg w-full max-w-md">
+      <h2 className="text-xl font-bold text-center text-gray-800 mb-4">Task Distribution</h2>
+      <Pie data={pieData} />
     </div>
   );
 };
 
-export default piechart;
+export default PieChart;
