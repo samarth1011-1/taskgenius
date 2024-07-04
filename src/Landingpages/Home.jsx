@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { PlusCircle } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -20,31 +21,38 @@ const Home = () => {
             </p>
           </div>
         </div>
-
-        <div
-          className="absolute bottom-0 right-0 bg-sideComp text-white p-5 md:p-10 rounded-tl-3xl w-full md:w-[68%] h-[50%] md:h-[68%] flex items-center justify-center transition-transform duration-200 transform hover:scale-105 hover:shadow-glow hover:cursor-pointer"
-          onClick={shiftPage}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex-1"
         >
-          <div className="bg-[#1e1e2e] p-5 md:p-8 rounded-3xl w-full max-w-xs md:max-w-md mx-auto my-5 md:my-10 shadow-lg font-sans shadow-gray-900 transform duration-100 hover:scale-105">
-            <div className="flex mb-4 md:mb-6">
-              <input
-                type="text"
-                className="flex-grow bg-[#2e2e3e] p-2 md:p-3 rounded-l-lg text-white focus:outline-none"
-                placeholder="Enter your task.."
-              />
-              <button className="bg-[#8839ef] p-2 md:p-3 rounded-r-lg hover:bg-[#9d50ff] transition-colors">
-                <PlusCircle size={24} color="white" />
-              </button>
-            </div>
+          <div
+            className="absolute bottom-0 right-0 bg-sideComp text-white p-5 md:p-10 rounded-tl-3xl w-full md:w-[68%] h-[50%] md:h-[68%] flex items-center justify-center transition-transform duration-200 transform hover:scale-105 hover:shadow-glow hover:cursor-pointer"
+            onClick={shiftPage}
+          >
+            <div className="bg-[#1e1e2e] p-5 md:p-8 rounded-3xl w-full max-w-xs md:max-w-md mx-auto my-5 md:my-10 shadow-lg font-sans shadow-gray-900 transform duration-100 hover:scale-105">
+              <div className="flex mb-4 md:mb-6">
+                <input
+                  type="text"
+                  className="flex-grow bg-[#2e2e3e] p-2 md:p-3 rounded-l-lg text-white focus:outline-none"
+                  placeholder="Enter your task.."
+                />
+                <button className="bg-[#8839ef] p-2 md:p-3 rounded-r-lg hover:bg-[#9d50ff] transition-colors">
+                  <PlusCircle size={24} color="white" />
+                </button>
+              </div>
 
-            <p className="mb-2 md:mb-4 text-xs md:text-sm text-gray-300 pl-3">
-              Tasks to do - 0
-            </p>
-            <p className="mt-4 md:mt-6 mb-2 md:mb-4 text-xs md:text-sm text-gray-300 pl-3">
-              Done - 0
-            </p>
+              <p className="mb-2 md:mb-4 text-xs md:text-sm text-gray-300 pl-3">
+                Tasks to do - 0
+              </p>
+              <p className="mt-4 md:mt-6 mb-2 md:mb-4 text-xs md:text-sm text-gray-300 pl-3">
+                Done - 0
+              </p>
+            </div>
           </div>
-        </div>
+        </motion.div>
       </div>
       <footer className="bg-[#2e6c7d] p-4 text-white">
         <div className="container mx-auto flex justify-between items-center">

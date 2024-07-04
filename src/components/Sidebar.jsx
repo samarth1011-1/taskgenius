@@ -1,15 +1,16 @@
 import React, { useContext, useEffect } from "react";
 import { Sidebardata } from "./Sidebardata";
 import { useNavigate } from "react-router-dom";
-import { GlobalContext } from "../GlobalContexts/GobalContext";
+import { GlobalContext } from "../GlobalContexts/GlobalContext";
+import { HomeIcon } from "lucide-react";
 const Sidebar = () => {
-  const { info, setInfo } = useContext(GlobalContext);
+  const {setInfo } = useContext(GlobalContext);
   const navigate = useNavigate();
 
   function goto(link) {
     setInfo((prevInfo) => ({
       ...prevInfo,
-      location: link,
+      currentpage: link,
     }));
   }
 
@@ -24,6 +25,12 @@ const Sidebar = () => {
         </p>
       </div>
       <ul className="flex-1 overflow-y-auto">
+
+        <li key="Home" className="p-4 flex items-center space-x-4 hover:bg-[#27293D] cursor-pointer transition-colors" onClick={()=>navigate('/')}>
+        <div><HomeIcon/></div>
+        <div>Home</div>
+        </li>
+        
         {Sidebardata.map((val, key) => (
           <li
             key={key}

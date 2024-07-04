@@ -4,11 +4,11 @@ const GlobalContext = createContext();
 
 const GlobalProvider = ({ children }) => {
   const [info, setInfo] = useState({
-    toggle: true,
     tasks: [],
     newTask: "",
     doneTasks: [],
-    location:""
+    currentpage: "/dashboard",
+    startDate: new Date(),
   });
 
   return (

@@ -1,7 +1,13 @@
 import React, { useContext } from "react";
-import { PlusCircle, CheckCircle, Circle, Trash2 } from "lucide-react";
+import {
+  PlusCircle,
+  CheckCircle,
+  Circle,
+  Trash2,
+  CalendarCheck,
+} from "lucide-react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { GlobalContext } from "../GlobalContexts/GobalContext";
+import { GlobalContext } from "../GlobalContexts/GlobalContext";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const TodoApp = () => {
@@ -16,11 +22,11 @@ const TodoApp = () => {
       }));
     }
   };
-  // const handleKeyPress = (e) => {
-  //   if (e.key === "Enter") {
-  //     addTask();
-  //   }
-  // };
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      addTask();
+    }
+  };
 
   const completeTask = (taskId) => {
     const task = info.tasks.find((t) => t.id === taskId);
@@ -54,13 +60,12 @@ const TodoApp = () => {
             type="text"
             value={info.newTask}
             onChange={(e) => {
-              e.preventDefault()
               setInfo((prevInfo) => ({
                 ...prevInfo,
                 newTask: e.target.value,
               }));
             }}
-            // onKeyPress={handleKeyPress}
+            onKeyPress={handleKeyPress}
             placeholder="Add a new task"
             className="flex-grow bg-[#2B2C3B] p-3 rounded-l-lg text-white focus:outline-none"
           />
@@ -75,6 +80,7 @@ const TodoApp = () => {
         <p className="mb-4 text-sm text-gray-400">
           Tasks to do - {info.tasks.length}
         </p>
+        {/* Task area */}
         <div className="max-h-80 overflow-y-auto">
           {info.tasks.map((task) => (
             <div
@@ -82,6 +88,7 @@ const TodoApp = () => {
               className="bg-[#2B2C3B] p-3 rounded-lg mb-2 flex justify-between items-center text-white"
             >
               <span>{task.text}</span>
+              {/* Checkbox */}
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => completeTask(task.id)}
@@ -89,6 +96,13 @@ const TodoApp = () => {
                 >
                   <Circle size={20} />
                 </button>
+
+                {/* DUE DATE */}
+                <button className="text-green-400 hover:text-green-500">
+                  <CalendarCheck size={20} />
+                </button>
+
+                {/* Delete task */}
                 <button
                   onClick={() => deleteTask(task.id, false)}
                   className="text-red-500 hover:text-red-400"
@@ -99,7 +113,7 @@ const TodoApp = () => {
             </div>
           ))}
         </div>
-
+        {/* Completed task area */}
         <p className="mt-4 mb-4 text-sm text-gray-400">
           Completed - {info.doneTasks.length}
         </p>
@@ -110,8 +124,10 @@ const TodoApp = () => {
               className="bg-[#2B2C3B] p-3 rounded-lg mb-2 flex justify-between items-center text-white line-through"
             >
               <span>{task.text}</span>
+
               <div className="flex items-center space-x-2">
                 <CheckCircle size={20} className="text-[#5961F9]" />
+                {/* delete task */}
                 <button
                   onClick={() => deleteTask(task.id, true)}
                   className="text-red-500 hover:text-red-400"

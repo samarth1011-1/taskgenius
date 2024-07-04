@@ -1,7 +1,7 @@
 import Todo from "./components/todo";
 import Home from "./Landingpages/Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { GlobalProvider } from "./GlobalContexts/GobalContext";
+import { GlobalProvider } from "./GlobalContexts/GlobalContext";
 import Dashboard from "./Landingpages/Dashboard";
 import Statspage from "./statistics/statspage";
 import AI from "./AI/AI";

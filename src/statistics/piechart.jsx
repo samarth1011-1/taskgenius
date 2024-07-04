@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { GlobalContext } from "../GlobalContexts/GobalContext";
+import { GlobalContext } from "../GlobalContexts/GlobalContext";
 import { Pie } from "react-chartjs-2";
 
 const PieChart = () => {
