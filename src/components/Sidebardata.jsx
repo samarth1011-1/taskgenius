@@ -6,16 +6,16 @@ export const Sidebardata = [
   {
     title: "Add Tasks",
     icon: <Plus />,
-    link: "/todo",
+    link: "todo",
   },
   {
     title: "Statistics",
     icon: <BarChart3 />,
-    link: "/stats",
+    link: "stats",
   },
   {
     title: "AI",
     icon: <Brain />,
-    link: "/AI",
+    link: "AI",
   },
 ];

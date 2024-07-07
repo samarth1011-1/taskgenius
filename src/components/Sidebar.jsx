@@ -7,12 +7,12 @@ const Sidebar = () => {
   const {setInfo } = useContext(GlobalContext);
   const navigate = useNavigate();
 
-  function goto(link) {
+ const changePage = (page) => {
     setInfo((prevInfo) => ({
       ...prevInfo,
-      currentpage: link,
+      currentpage: page,
     }));
-  }
+  };
 
   return (
     <div className="h-full w-64 lg:w-52 md:w-44 sm:w-36 bg-[#1F2029] text-white flex flex-col overflow-hidden">
@@ -34,7 +34,7 @@ const Sidebar = () => {
         {Sidebardata.map((val, key) => (
           <li
             key={key}
-            onClick={() => goto(val.link)}
+            onClick={() => changePage(`/dashboard/${val.link}`)}
             className={`p-4 flex items-center space-x-4 hover:bg-[#27293D] cursor-pointer transition-colors ${
               !val.link ? "cursor-not-allowed opacity-50" : ""
             }`}

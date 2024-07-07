@@ -7,12 +7,19 @@ const GlobalProvider = ({ children }) => {
     tasks: [],
     newTask: "",
     doneTasks: [],
-    currentpage: "/dashboard",
+    currentpage: "/",
     startDate: new Date(),
   });
 
+  const changePage = (page) => {
+    setInfo((prevInfo) => ({
+      ...prevInfo,
+      currentpage: page,
+    }));
+  };
+
   return (
-    <GlobalContext.Provider value={{ info, setInfo }}>
+    <GlobalContext.Provider value={{ info, setInfo, changePage }}>
       {children}
     </GlobalContext.Provider>
   );
