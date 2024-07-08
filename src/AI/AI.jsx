@@ -9,11 +9,12 @@ const AI = () => {
 
   const { info } = useContext(GlobalContext);
   const taskList = info.tasks;
+
   useEffect(() => {
     const fetchPredictedTasks = async () => {
       setLoading(true);
       try {
-        const response = await axios.post("/ai", {
+        const response = await axios.post("/api/ai", {
           tasks: taskList,
         });
         setPredictedTasks(response.data.predictedTasks.split(", "));

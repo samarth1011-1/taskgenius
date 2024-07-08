@@ -18,7 +18,7 @@ const Sidebar = () => {
     <div className="h-full w-64 lg:w-52 md:w-44 sm:w-36 bg-[#1F2029] text-white flex flex-col overflow-hidden">
       <div className="p-4 text-2xl font-bold border-b border-gray-700">
         <p
-          onClick={() => goto("/dashboard")}
+          onClick={() => navigate("/dashboard")}
           className=" hover:cursor-pointer select-none"
         >
           Dashboard
@@ -34,7 +34,7 @@ const Sidebar = () => {
         {Sidebardata.map((val, key) => (
           <li
             key={key}
-            onClick={() => changePage(`/dashboard/${val.link}`)}
+            onClick={() => changePage(`/${val.link}`)}
             className={`p-4 flex items-center space-x-4 hover:bg-[#27293D] cursor-pointer transition-colors ${
               !val.link ? "cursor-not-allowed opacity-50" : ""
             }`}

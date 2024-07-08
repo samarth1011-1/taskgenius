@@ -9,8 +9,8 @@ const Dashboard = () => {
 
   const componentMapping = {
     "/todo": <TodoApp />,
-    "/dashboard/stats": <Statspage />,
-    "/dashboard/AI": <AI />,
+    "/stats": <Statspage />,
+    "/AI": <AI />,
     default: <TodoApp />,
   };
 
